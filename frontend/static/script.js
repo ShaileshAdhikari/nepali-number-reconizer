@@ -11,6 +11,8 @@ function reset(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     canvas_data = { "pencil": [] }
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    $("#resultHolder").hide();
+    $("#divClassTable").hide();
 }
         
 // pencil tool
@@ -71,6 +73,25 @@ function identify(){
     var data = JSON.stringify(canvas_data);
     var image = canvas.toDataURL();
     
-    $.post("/", { save_fname: filename, save_cdata: data, save_image: image });
-    // alert(filename + " saved");
-} 
+    $.post("/", {
+        save_fname: filename, save_cdata: data, save_image: image
+    },function (data, status){
+        console.log(data);
+        let numbers = ['zero','one','two','three','four','five','six','seven','eight','nine'];
+
+        $("#resultHolder").html(numbers[data.classVal]);
+        let confDict = data.class_prob[0];
+        for (let i=0;i < confDict.length; i++){
+            let elementName = "#score_"+numbers[i];
+            $(elementName).html((confDict[i]*100).toFixed(10) + " %");
+        }
+        $("#resultHolder").show();
+        $("#divClassTable").show();
+    });
+}
+
+$(document).ready(function() {
+    console.log( "ready!" );
+    $("#resultHolder").hide();
+    $("#divClassTable").hide();
+});

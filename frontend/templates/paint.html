@@ -13,10 +13,48 @@
         <fieldset id="colorset">
             <button id="save" onclick="identify()">Identify</button>
             <button id="resettool" type="button" style="height: 25px; width: 100px;" onclick="reset()">Reset</button>
-            </fieldset>
-    {% if prediction %}
-        <h1>{{ prediction }}</h1>
-    {% endif %}
-            <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-            <script src=" {{ url_for('static', filename='script.js') }}"></script>
+        </fieldset>
+        <h1 id="resultHolder">
+
+        </h1>
+        <div id="divClassTable">
+        <table>
+            <tr>
+                <th> Number </th>
+                <th> Probability Score </th>
+            </tr>
+            <tr>
+                <td> Zero </td> <td id="score_zero"></td>
+            </tr>
+            <tr>
+                <td> One </td> <td id="score_one"></td>
+            </tr>
+            <tr>
+                <td> Two </td> <td id="score_two"></td>
+            </tr>
+            <tr>
+                <td> Three </td> <td id="score_three"></td>
+            </tr>
+            <tr>
+                <td> Four </td> <td id="score_four"></td>
+            </tr>
+            <tr>
+                <td> Five </td> <td id="score_five"></td>
+            </tr>
+            <tr>
+                <td> Six </td> <td id="score_six"></td>
+            </tr>
+            <tr>
+                <td> Seven </td> <td id="score_seven"></td>
+            </tr>
+            <tr>
+                <td> Eight </td> <td id="score_eight"></td>
+            </tr>
+            <tr>
+                <td> Nine </td> <td id="score_nine"></td>
+            </tr>
+        </table>
+        </div>
+        <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+        <script src=" {{ url_for('static', filename='script.js') }}"></script>
 {% endblock %}

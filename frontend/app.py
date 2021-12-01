@@ -1,7 +1,7 @@
 from io import BytesIO
 import os
 import base64
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 import psycopg2
 import numpy as np
 import tensorflow as tf
@@ -50,13 +50,16 @@ def identify():
     cur.execute("SELECT id, name, canvas_image from files")
     file = cur.fetchall()
 
-    pred, confidence = predict(file[-1][1])
+    pred, response = predict(file[-1][1])
 
     cur.execute("""UPDATE files SET predicted = (%s) WHERE id = (%s);""",(int(pred[0]),int(file[-1][0])))
     conn.commit()
     conn.close()
 
-    return render_template("paint.html", prediction = pred )
+    response = jsonify(response)
+    response.headers.add('Access-Control-Allow-Origin','*')
+
+    return response
 
 def predict(directory):
     img = load_img(directory, target_size=IMAGE_SIZE, grayscale=True)
@@ -72,7 +75,11 @@ def predict(directory):
     pred = conf.argmax(axis=1)
 
     print("Predicted {} with {}% confidence.".format(pred,conf[0][pred]*100))
-    return pred, conf
+    response= {
+        'classVal':int(pred[0]),
+        'class_prob':conf.tolist()
+    }
+    return pred, response
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
