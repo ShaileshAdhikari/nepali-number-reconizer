@@ -62,7 +62,7 @@ def identify():
     return response
 
 def predict(directory):
-    img = load_img(directory, target_size=IMAGE_SIZE, grayscale=True)
+    img = load_img(directory, target_size=IMAGE_SIZE, color_mode='grayscale')
     img = ImageOps.invert(img)
     img_arr = np.expand_dims(img_to_array(img), axis=0)
     datagen = ImageDataGenerator(rescale=1. / 255)
