@@ -11,8 +11,8 @@ function reset(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     canvas_data = { "pencil": [] }
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    $("#resultHolder").hide();
-    $("#divClassTable").hide();
+    // $("#resultHolder").hide();
+    // $("#divClassTable").hide();
 }
         
 // pencil tool
@@ -52,17 +52,6 @@ function pencil(){
         canvas_data.pencil.push({ "startx": prevX, "starty": prevY, "endx": curX, "endy": curY, "thick": ctx.lineWidth, "color": ctx.strokeStyle });
     }
 }
-        
-// line tool
-
-        
-// rectangle tool
-
-        
-// circle tool
-
-        
-// eraser tool
 
 function identify(){
         const toTimestamp = (strDate) => {
@@ -80,6 +69,7 @@ function identify(){
         let numbers = ['zero','one','two','three','four','five','six','seven','eight','nine'];
 
         $("#resultHolder").html(numbers[data.classVal]);
+        $("#result-image-holder").html("<img src=" +data.path+ "/>")
         let confDict = data.class_prob[0];
         for (let i=0;i < confDict.length; i++){
             let elementName = "#score_"+numbers[i];
@@ -92,6 +82,6 @@ function identify(){
 
 $(document).ready(function() {
     console.log( "ready!" );
-    $("#resultHolder").hide();
-    $("#divClassTable").hide();
+    // $("#resultHolder").hide();
+    // $("#divClassTable").hide();
 });
