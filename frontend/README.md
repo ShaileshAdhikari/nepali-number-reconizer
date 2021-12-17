@@ -1,4 +1,4 @@
-Paintapp-Flask-PostgreSQL
+Number Recognizer Frontend
 =========================
 
-Paint application using Flask, JavaScript and PostgreSQL
+Application built using Flask, JavaScript and PostgreSQL
